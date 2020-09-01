@@ -1,0 +1,37 @@
+<div class="s12 m3" class="collapsible" style="overflow: scroll;position: fixed; right: 50px; bottom: 0px; background-color: bisque;">
+    <li>
+        <div class="collapsible-header">
+            <div class="row" style="width:320px; ">
+                <div class="col m8 s4"><h6 style="padding-left:5px;">Notifications</h6></div>
+                <div class="col s4"><button class="toggleNotifications btn btn-small blue" style="margin:5px auto;">Hide</button></div>
+              </div>
+        </div>
+        <div class="collapsible-body">
+            <div class="col">
+                
+                <ul class="collapsible" id="notificationlist">
+                </ul>
+              </div>
+        </div>
+    </li>
+  </div>
+  <script>
+      $(document).ready(function(){
+          $('.toggleNotifications').on('click', function(){
+              $('.notifications').css('height', '50px');
+              $('#notificationlist').toggle();
+            if($(this).text() == 'Hide'){
+                $('#notificationlist').hide();
+                $('.notifications').css('height', 'auto');
+                $(this).text('Show');
+            }
+            else{
+                $('#notificationlist').show();
+                $('.notifications').css('height', 'auto');
+                $(this).text('Hide');
+
+            }
+
+          })
+      })
+  </script>

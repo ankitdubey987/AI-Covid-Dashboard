@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+  {% block content %}
+<div id="camsDisplay">
+  <div class="row">
+    {% for d in data %}
+    <div class="col s12 m3">
+        <video id='video{{d}}' width="310" height="270" class="video-js vjs-default-skin" controls>
+            <source src="http://localhost:8080/hls/{{d}}/{{today}}/index.m3u8" type="application/x-mpegURL" />
+      </video>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+  {% endblock %}
+    {% block varScripts %}
+<script>
+    $(document).ready(function() {
+        $(document).ready(function(){
+		const videoElems = $('video');
+		$.each(videoElems, function(i, elem){
+			// console.log(elem);
+			let elemId = $(this).attr('id')
+			console.log(elemId);
+			let player = videojs(elemId);
+			player.play();
+		})
+	})	
+
+    });
+  
+  function playcams(count) {
+	const dateStr = formatDate(new Date());
+	for (let i = 1; i <= count; i++) {
+		let colSize;
+		if (count == 8) colSize = 3;
+		if (count == 4) colSize = 6;
+		const display = $(`<div class='col-md-${colSize} col-sm-12' id='display${i}'></div>`);
+		const videoItem = $(
+			`<video id='video${i}' width='500' height=270 class="video-js vjs-default-skin" controls></video>`
+		);
+		const sourceItem = $(`<source>`);
+		const srcStr = `http://localhost:8080/hls/cam${i}/${dateStr}/index.m3u8`;
+		sourceItem.attr('src', srcStr);
+		sourceItem.attr('type', 'application/x-mpegURL');
+		videoItem.append(sourceItem);
+		display.append(videoItem);
+		$('#camsDisplay').append(display);
+		try {
+			let player = videojs(`video${i}`);
+			player.play();
+			player.ready(function() {
+				if (this.error !== null) {
+				}
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+}
+
+</script>
+    {% endblock %}

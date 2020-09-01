@@ -1,0 +1,46 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Cam Section</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <a href="{{ url_for('add_cam_page')}}" class="btn btn-sm btn-outline-secondary">Add Cam</a>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table">
+                <thead>
+                    <th>#</th>
+                    <th>Live View</th>
+                    <th>Cam Name</th>
+                    <th>IP Address</th>
+                    <th>Channel</th>
+                    <th>User ID</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <!-- PUT LOOP HERE FOR ALL THE CAMERAS LIST -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="{{url_for('config_cam',camid=1,_external=True)}}" class="btn-link">configure&nbsp;</a>  |&nbsp;
+                                <a href="#" class="btn-link">delete</a>
+                            </td>
+                        </tr>
+                    <!-- END THE LOOP HERE -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

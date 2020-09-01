@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Streaming</title>
+    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <!-- <script src="{{ url_for('static', filename='videojs-contrib-hls.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='videojs-contrib-hls.js')}}"></script> -->
+    <!-- <link href="/home/omni/src/static/videojs-contrib-hls.js" rel="stylesheet"> -->
+    <!-- <script src="/home/omni/src/static/videojs-contrib-hls.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Camera Health Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Camera Management
+          </button>   
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">People Counting</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Heat Map</a> 
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+    
+      <div class="row d-flex flex-wrap" id="camsDisplay">
+        
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form id='form'>
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Cameras</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  
+                  <div class="error"></div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" class="check-camera" name="cam1" value="1" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox" disabled placeholder="Camera 1">
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" class="check-camera" name="cam2" value="2" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox" disabled placeholder="Camera 2">
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" class="check-camera" name="cam3" data-id="3" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox" disabled placeholder="Camera 3">
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" class="check-camera" name="cam4" data-id="4" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox" disabled placeholder="Camera 4">
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" class="check-camera" name="cam5" data-id="5" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox" disabled placeholder="Camera 5">
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" id='showCams' class="btn btn-primary">Show</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+<script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function() {
+	// var player = videojs('video1');
+	// player.play();
+	const cameraCheckboxes = $('.check-camera');
+
+    // $('#showCams').click(function(){
+    //   $.ajax({
+    //      type: "POST",
+    //      url: "/cameras-display",
+    //      data: $('#form').serialize(),
+    //      success: function (msg) {
+    //          $("#modal").modal('hide');
+    //      },
+    //      error: function () {
+    //          $("#error").show();
+    //      }
+    //  });
+    // })
+
+	$('#showCams').on('click', function() {
+		$('.modal').hide();
+    // destroy all previous video tags
+    $('#camsDisplay').children().remove();
+		// set src attribute for video tag as per the selcted cameras and current date
+		const dateStr = formatDate(new Date());
+		const selectedCams = getSeletedCams(cameraCheckboxes);
+		
+		for (let i = 0; i < selectedCams.length; i++) {
+      const display = $(`<div class='d-flex flex-wrap flex-center' id='display${selectedCams[i]}'></div>`)
+      const videoItem = $(`<video id='video${i}' class="video-js vjs-default-skin" controls></video>`);
+      switch(selectedCams.length){
+        case 1:
+          display.addClass('col-md-12')
+          videoItem.attr('height', '480')
+          videoItem.attr('width', '960')
+      }
+      if(selectedCams.length == 2){
+        display.addClass('col-md-6')
+        videoItem.attr('height', '300')
+        videoItem.attr('width', '600')
+
+      }
+      if(selectedCams.length == 3){
+        display.addClass('col-md-4')
+        videoItem.attr('height', '300')
+        videoItem.attr('width', '480')
+
+      }
+      const sourceItem = $(`<source>`);
+	  const srcStr = `http://localhost:8080/hls/cam${selectedCams[i]}/${dateStr}/index.m3u8`;
+      sourceItem.attr('src', srcStr);
+      sourceItem.attr('type', 'application/x-mpegURL');
+      videoItem.append(sourceItem);
+      display.append(videoItem);
+      $('#camsDisplay').append(display);
+      let player = videojs(`video${i}`);
+	    player.play();
+		}
+    $('div').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+	});
+});
+
+function formatDate(date) {
+	var d = new Date(date),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear();
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return [ year, month, day ].join('-');
+}
+
+function getSeletedCams(allcams){
+  const selCams = [];
+  $.each(allcams, function(index, checkbox) {
+			if (this.checked == true) {
+        selCams.push(this.getAttribute('data-id'));
+        this.checked = false;
+			}
+    });
+    return selCams;
+}
+// const date = new Date();
+// const month = (date.getMonth() + 1).toLocaleString().padStart(2, '0');
+// const day = date.getDate()().toLocaleString().padStart(2, '0');
+// const dateStr = date.getFullYear() + '-' + month + '-' + day;
+
+</script>
+</body>
+</html>

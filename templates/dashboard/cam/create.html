@@ -1,0 +1,26 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><span><img src="{{ url_for('static', filename='icons/camera.svg') }}" alt="#camera" height="40" width="50"></span>&nbsp;Add Camera</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <a href="{{ url_for('cam_manage')}}" class="btn btn-sm btn-outline-secondary"><span><img src="{{ url_for('static', filename='icons/chevron-double-left.svg') }}" alt=""></span>&nbsp;Back</a>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="col-md-6 offset-md-4 m-auto">
+        <form class="form-group" action="{{ url_for('add_camera') }}" method="post">
+            <input type="text" name="cam_name" id="InputCamName" placeholder="Camera Name" class="form-control my-2">
+            <input type="text" name="ipaddress" id="InputIP" class="form-control my-2" placeholder="IP Address">
+            <input type="text" name="channel" id="InputChannel" class="form-control my-2" placeholder="Channel">
+            <input type="text" name="uid" id="InputUserid" class="form-control my-2" placeholder="User ID">
+            <input type="password" name="password" id="InputPassword" placeholder="password" class="form-control my-2">
+            <!-- <input type="text" name="jobrole" id="InputJobRole" class="form-control my-2" placeholder="Job Role"> -->
+            <button type="submit" class="btn btn-info offset-md-5" >Confirm</button>
+        </form>
+    </div>
+</div>    
+{% endblock content %}

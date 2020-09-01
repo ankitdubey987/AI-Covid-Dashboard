@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+  {% block content %}
+
+    <div class="wrapper">
+      <section class="sidebar" id="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+        <ul id="cams">
+          <li>
+           <button type="btn btn-primary" class="clearbtn">Clear</button>
+          </li>
+          <li>
+            <li>
+              <a class="btn btn-secondary" style="width: 100%; background-color: inherit;border:none;" data-toggle="collapse" href="#gridcamselect">4 Camera Options</a>
+            </li>
+            <div class="collapse" id="gridcamselect">
+              <form class="d-flex flex-wrap" action="#">
+                <p>
+                  <label>
+                    <input type="checkbox" />
+                    <span>Cam 1</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" />
+                    <span>Cam 2</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" class="filled-in" checked="checked" />
+                    <span>Cam 3</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input id="indeterminate-checkbox" type="checkbox" />
+                    <span>Cam 4</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" checked="checked" disabled="disabled" />
+                    <span>Cam 5</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input type="checkbox" disabled="disabled" />
+                    <span>Cam 1</span>
+                  </label>
+                </p>
+              </form>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" id='cams8' class="camera-checkbox cams8"> 8 Cameras Display
+          </li>
+          <li>
+            <a class="btn btn-secondary" style="width: 100%; background-color: inherit;border:none;" data-toggle="collapse" href="#camscheckboxes">Single Camera Options</a>
+          </li>
+          <div class="collapse" id="camscheckboxes">
+            <ul class="cams-list">
+              <li><a href="/cam/1">Cam 1</a></li>
+                <li><a href="/cam/2">Cam 2</a></li>
+                <li><a href="/cam/3">Cam 3</a></li>
+                <li><a href="/cam/4">Cam 4</a></li>
+                <li><a href="/cam/5">Cam 5</a></li>
+                <li><a href="/cam/6">Cam 6</a></li>
+                <li><a href="/cam/7">Cam 7</a></li>
+                <li><a href="/cam/8">Cam 8</a></li>
+                <li><a href="/cam/9">Cam 9</a></li>
+                <li><a href="/cam/10">Cam 10</a></li>
+                <li><a href="/cam/11">Cam 11</a></li>
+                <li><a href="/cam/12">Cam 12</a></li>
+                <li><a href="/cam/13">Cam 13</a></li>
+                <li><a href="/cam/14">Cam 14</a></li>
+                <li><a href="/cam/15">Cam 15</a></li>
+                <li><a href="/cam/16">Cam 16</a></li>
+                <li><a href="/cam/17">Cam 17</a></li>
+                <li><a href="/cam/18">Cam 18</a></li>
+                <li><a href="/cam/19">Cam 19</a></li>
+                <li><a href="/cam/20">Cam 20</a></li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+      </section>
+      <div class="row d-flex flex-wrap" id="camsDisplay">
+        
+      </div>
+    </div>
+    {% endblock %}

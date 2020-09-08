@@ -1,25 +1,29 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory
 from datetime import date
+from flask_ngrok import run_with_ngrok
+
 from passlib.hash import pbkdf2_sha256
-import pyrebase
+# import pyrebase
 import re
 import natsort
 from operator import itemgetter
-import firebase_admin
-from firebase_admin import credentials
+# import firebase_admin
+# from firebase_admin import credentials
 from pyfcm import FCMNotification
 from configGUI import *
 from datetime import date
 from datetime import datetime
 # from firebase_admin import firebase_admin.messaging
-from firebaseconfig import db
+# from firebaseconfig import db
 from markPointsVid import  captureFrame,get_mouse_points
 # from lineCrossFinal_resnet_roi_copy1 import lineCross
 # from lineCrossFinal_resnet_roi_test import lineCross
 # from deepstream_test_3 import run_crowdcount
 
-app = Flask(__name__, static_url_path='/static')
 
+
+app = Flask(__name__, static_url_path='/static')
+run_with_ngrok(app)
 
 def atoi(text):
     return int(text) if text.isdigit() else text
@@ -89,6 +93,16 @@ def add_cam_page():
 @app.route('/cameramanage')
 def cam_manage():
     return render_template('dashboard/cam/index.html')
+
+# route for notification page
+@app.route('/notification')
+def notification():
+    return render_template('notifications.html')
+
+# route for analytics page
+@app.route('/analytics')
+def analytics():
+    return render_template('dashboard/analytics.html')
 
 @app.route('/cam-info', methods=['POST', 'GET'])
 def cam_info():
@@ -186,4 +200,4 @@ def hello_world():
     return render_template('dashboard/admin.html', home=True)
     
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1')
+    app.run()

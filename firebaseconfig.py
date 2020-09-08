@@ -5,7 +5,7 @@ from firebase_admin import credentials
 from firebase_admin import storage
 
 config = {
-    "apiKey": "AIzaSyCGvYVyE9M9FrWGZQ9-9cdCYnE7e6WTb98",
+  "apiKey": "AIzaSyCGvYVyE9M9FrWGZQ9-9cdCYnE7e6WTb98",
   "authDomain": "webel-dashboad.firebaseapp.com",
   "databaseURL": "https://webel-dashboad.firebaseio.com",
   "projectId": "webel-dashboad",

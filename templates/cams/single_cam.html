@@ -1,0 +1,28 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %} 
+
+	<div class="main" 
+    style="
+      align-items: center;
+      text-align: center;
+    "   
+  	>
+    <p style="
+      padding-top: 10px;
+      font-weight:bold">Cam 1</p>
+    <div class="video" 
+      style="
+        padding-left: 200px; 
+        padding-right: 200px; 
+        padding-top: 10px;" 
+      >
+      <video width="950" height="530" controls class="cam">
+        <source src="https://www.youtube.com/watch?v=TSrfB7JIzxY" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        Your browser does not support the video tag.
+      </video>
+  	</div>
+  	</div>
+
+{% endblock content %}

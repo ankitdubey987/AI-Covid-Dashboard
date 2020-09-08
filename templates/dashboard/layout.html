@@ -68,12 +68,38 @@
               Dashboard <span class="sr-only">(current)</span>
             </a>
           </li>
+          <div id="accordion">  
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('player') }}">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
               <span><img src="{{ url_for('static', filename='icons/camera-reels.svg') }}" width="30" alt=""></span>
               LIVE CAMS
             </a>
           </li>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <li class="nav-item">
+              <a class="nav-link " href="{{ url_for('singlecam') }}">
+                SINGLE CAMERA VIEW      
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{{ url_for('fourcam') }}">
+                4 CAMERA VIEW
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{{ url_for('eightcam') }}">
+                8 CAMERA VIEW       
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{{ url_for('twentycam') }}">
+                20 CAMERA VIEW      
+              </a>
+            </li>
+          </div>
+          
+        </div>
+
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">
               <span><img src="{{ url_for('static', filename='icons/sun.svg') }}" width="30" alt=""></span>
@@ -105,11 +131,34 @@
             </a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ url_for('notification') }}">
               <span><img src="{{ url_for('static', filename='icons/chat-square-dots.svg') }}" width="30" alt=""></span>
               NOTIFICATIONS
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('analytics') }}">
+              <span><img src="{{ url_for('static', filename='icons/cast.svg') }}" width="30" alt=""></span>
+              ANALYTICS
+            </a>
+          </li>
+          <!-- <div id="accordion">            
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Collapsible Group Item #2
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim 
+                  </div>
+              </div>
+            </div>
+            
+          </div> -->
         </ul>
       </div>
     </nav>

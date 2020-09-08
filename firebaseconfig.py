@@ -1,4 +1,4 @@
-import pyrebase
+# import pyrebase
 from google.cloud import storage
 import firebase_admin
 from firebase_admin import credentials
@@ -18,9 +18,9 @@ config = {
 cred = credentials.Certificate("webel-dashboad-firebase-adminsdk-39ope-cec400e142.json")
 # firebase_admin.initialize_app(cred)
 
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
-storage = firebase.storage()
+# firebase = pyrebase.initialize_app(config)
+# db = firebase.database()
+# storage = firebase.storage()
 
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'webel-dashboad.appspot.com'

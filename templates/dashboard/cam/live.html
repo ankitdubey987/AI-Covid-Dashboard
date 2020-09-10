@@ -1,0 +1,21 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Live Cam Section</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <!-- <a href="{{ url_for('add_cam_page')}}" class="btn btn-sm btn-outline-secondary">Add Cam</a> -->
+      </div>
+    </div>
+  </div>
+  <span>
+    {% if err %}
+    <p class="alert-danger">{{err}}</p>
+    {% else %}    
+  </span>
+  {% for c in cams %}
+    <img src="{{ url_for('video' , ip=c.ip_address  ) }}" alt="#video_cam_{{c.id}}">      
+  {% endfor %}
+  {% endif %}  
+{% endblock content %}

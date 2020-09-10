@@ -1,0 +1,30 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %} 
+
+	<div class="main" 
+    style="
+      align-items: center;
+      text-align: center;
+    "   
+  	>
+    
+    <div class="video" 
+      style="
+        
+        padding-top: 10px;
+        padding-bottom: 20px;
+        " 
+      >
+      {% for c in cams %}
+      <!-- <video width="950" height="530" controls class="cam"> -->
+        <img src="{{ url_for('video',ip=c.ip_address) }}">
+        <!-- Your browser does not support the video tag. -->
+      <!-- </video> -->
+      {% endfor %}
+      
+      
+  	</div>
+  	</div>
+
+{% endblock content %}

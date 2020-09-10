@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory
 from datetime import date
 from passlib.hash import pbkdf2_sha256
-import pyrebase
+#import pyrebase
 import re
 import natsort
 from operator import itemgetter
@@ -12,7 +12,7 @@ from configGUI import *
 from datetime import date
 from datetime import datetime
 # from firebase_admin import firebase_admin.messaging
-from firebaseconfig import db
+#from firebaseconfig import db
 from markPointsVid import  captureFrame,get_mouse_points
 # from lineCrossFinal_resnet_roi_copy1 import lineCross
 # from lineCrossFinal_resnet_roi_test import lineCross

@@ -12,17 +12,17 @@ import re
 import natsort
 from operator import itemgetter
 from pyfcm import FCMNotification
-from configGUI import *
+#from configGUI import *
 from datetime import date
 from datetime import datetime
 <<<<<<< HEAD
 # from firebase_admin import firebase_admin.messaging
 #from firebaseconfig import db
-from markPointsVid import  captureFrame,get_mouse_points
+#from markPointsVid import  captureFrame,get_mouse_points
 # from lineCrossFinal_resnet_roi_copy1 import lineCross
 # from lineCrossFinal_resnet_roi_test import lineCross
 # from deepstream_test_3 import run_crowdcount
-=======
+#=======
 from markPointsVid import  captureFrame
 from flask_sqlalchemy import SQLAlchemy
 from VideoCamera import VideoCamera

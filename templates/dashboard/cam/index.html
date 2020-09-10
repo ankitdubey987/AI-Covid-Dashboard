@@ -16,27 +16,43 @@
             <table class="table table-hover table">
                 <thead>
                     <th>#</th>
-                    <th>Live View</th>
                     <th>Cam Name</th>
                     <th>IP Address</th>
                     <th>Channel</th>
                     <th>User ID</th>
+                    <th>Activity Monitoring</th>
                     <th>Actions</th>
                 </thead>
                 <tbody>
                     <!-- PUT LOOP HERE FOR ALL THE CAMERAS LIST -->
+                    {% if cams=='No records found...' %}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <p style="color: blue;">{{cams}}</p>
+                        </tr>
+                    {% else %}
+                    
+                        {% for cam in cams %}
+                        <tr>
+                            <td>{{ cam.id }}</td>
+                            <td>{{ cam.name }}</td>
+                            <td>{{ cam.ip_address}}</td>
+                            <td>{{ cam.channel }}</td>
+                            <td>{{ cam.uid }}</td>
+                            <td>{{ cam.activity_monitor }}</td>
                             <td>
-                                <a href="{{url_for('config_cam',camid=1,_external=True)}}" class="btn-link">configure&nbsp;</a>  |&nbsp;
-                                <a href="#" class="btn-link">delete</a>
+                                <form action="{{ url_for('config_cam') }}" method="post">
+                                    <input type="hidden" value="{{ cam.id }}" name="camid">
+                                    <input type="submit" value="CONFIGURE" class="btn-link">
+                                </form>
+                                <form action="{{ url_for('remove_cam') }}" method="post">
+                                    <input type="hidden" value="{{ cam.id }}" name="camid">
+                                    <input type="submit" value="DELETE" class="btn-link">
+                                </form>
+                                
                             </td>
                         </tr>
+                        {% endfor %}
+                    {% endif %}
                     <!-- END THE LOOP HERE -->
                 </tbody>
             </table>
@@ -44,3 +60,7 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

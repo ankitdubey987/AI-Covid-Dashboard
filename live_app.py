@@ -1,25 +1,101 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory
+import eventlet
+# eventlet.monkey_patch()
+from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory,Response
+from flask_socketio import SocketIO,emit,send
 from datetime import date
+<<<<<<< HEAD
 from passlib.hash import pbkdf2_sha256
 #import pyrebase
+=======
+>>>>>>> 4a27070795eea0b32cde1a8b5273ae0c67fe2a6b
 import re
 import natsort
 from operator import itemgetter
-import firebase_admin
-from firebase_admin import credentials
 from pyfcm import FCMNotification
 from configGUI import *
 from datetime import date
 from datetime import datetime
+<<<<<<< HEAD
 # from firebase_admin import firebase_admin.messaging
 #from firebaseconfig import db
 from markPointsVid import  captureFrame,get_mouse_points
 # from lineCrossFinal_resnet_roi_copy1 import lineCross
 # from lineCrossFinal_resnet_roi_test import lineCross
 # from deepstream_test_3 import run_crowdcount
+=======
+from markPointsVid import  captureFrame
+from flask_sqlalchemy import SQLAlchemy
+from VideoCamera import VideoCamera
+from mypusher import pusher_client
+basedir = os.path.abspath(os.path.dirname(__file__))
+>>>>>>> 4a27070795eea0b32cde1a8b5273ae0c67fe2a6b
 
+async_mode = 'eventlet'
 app = Flask(__name__, static_url_path='/static')
 
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///' + os.path.join(basedir,'camDB.sqlite')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+socketio = SocketIO(app,async_mode=async_mode)
+
+class Camera(db.Model):
+    __tablename__='cameras'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    name = db.Column(db.String(64),unique=True)
+    ip_address = db.Column(db.String(64),unique=True)
+    channel = db.Column(db.String(64))
+    uid = db.Column(db.String(64))
+    activity_monitor = db.Column(db.String,default='Both')
+
+    def get_cam_name(self):
+        return self.name
+    @property
+    def get_cam_id(self):
+        return self.id
+    def get_cam_ip(self):
+        return self.ip_address
+    def get_cam_channel(self):
+        return self.channel
+    def get_cam_uid(self):
+        return self.uid
+    def get_cam_activity(self):
+        return self.activity_monitor
+    
+
+class CameraConfig(db.Model):
+    __tablename__ = 'cameras_config'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    camera_id = db.Column(db.Integer,unique=True)
+    cam_name = db.Column(db.String(64))
+    ip = db.Column(db.String(64),unique=True)
+    roi = db.Column(db.Text)
+
+class Notifications(db.Model):
+    __tablename__ = 'notifications'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    title = db.Column(db.String(255))
+    msg = db.Column(db.Text)
+    image_url = db.Column(db.Text)
+
+# done by sukanya
+@app.route('/singlecamview')
+def singlecam():
+    c = Camera.query.all()
+    return render_template('dashboard/single_cam.html',cams = c)
+
+@app.route('/fourcamview')
+def fourcam():
+    return render_template('dashboard/four_cam.html')
+
+@app.route('/eightcamview')
+def eightcam():
+    return render_template('dashboard/eight_cam.html',)
+
+@app.route('/twentycamview')
+def twentycam():
+    return render_template('dashboard/twenty_cam.html')
+# end code by sukanya
 
 def atoi(text):
     return int(text) if text.isdigit() else text
@@ -27,58 +103,26 @@ def atoi(text):
 def natural_keys(text):
     return [ atoi(c) for c in re.split(r'(\d+)', text) ]
 
+# for frames to be shown
+def gen(camera):
+    while True:
+        frame = camera.getframe()
+        yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n'+ frame +b'\r\n')
+
+@app.route('/video/<ip>',methods=['GET'])
+def video(ip):
+    if ip == '0' or ip=='127.0.0.1':
+        ip = 0
+    return Response(gen(VideoCamera(ip)),content_type='multipart/x-mixed-replace;boundary=frame')
+
+# for live cam page
 @app.route('/player')
 def player():
-    return render_template('display4.html', peoplecounting=True)
-
-@app.route('/firebase-messaging-sw.js')
-def sw():
-    response=make_response(
-                     send_from_directory('static',filename='firebase-messaging-sw.js'))
-    #change the content header file
-    response.headers['Content-Type']='application/javascript'
-    return response
-
-@app.route('/beep-02.mp3')
-def beep_sound():
-    response=make_response(
-                     send_from_directory('static',filename='audio/beep-02.mp3'))
-    #change the content header file
-    response.headers['Content-Type']="audio/mpeg"
-    return response
-
-@app.route('/linecrossing')
-def line_crossing():
-    data = db.child('line Crossing').get().val().values()
-    dict_sorted = natsort.natsorted(data, key=itemgetter(*['camera_name']))
-    # klist = db.child("line Crossing").get().val().keys()
-    # klist.sort(key=natural_keys)
-    return render_template('linecrossing.html', data=dict_sorted, cam_type="linecrossing")
-
-# FIXME: HIMADRI CONFIGURE THIS
-@app.route('/pplCount')
-def people_count():
-    # data = db.child('Crowd Counting').get().val().values()
-    # dict_sorted = natsort.natsorted(data, key=itemgetter(*['camera_name']))
-    # klist = db.child("line Crossing").get().val().keys()
-    # klist.sort(key=natural_keys)
-    # return render_template('pplecount.html', data=dict_sorted, cam_type="crowdcount")
-    return render_template('pplecount.html')
-
-@app.route('/crowdcount')
-def crowd_count():
-    try:
-        data = db.child('Crowd Count').get().val().values()
-    except:
-        return render_template('index.html')
-    return render_template('crowdcount.html', data=data, cam_type="crowdcount")
-
-@app.route('/linecrossing/<cam_id>')
-def cam1(cam_id):
-    data = {'id' : cam_id}
-    camdata = db.child("cameras").child(cam_id).get().val()
-    print(camdata)
-    return render_template('cam1.html', data=data, camdata=camdata)
+    c = Camera.query.all();
+    if len(c)==0:
+        error = 'Not camera found'
+        return render_template('dashboard/cam/live.html',err = error)
+    return render_template('dashboard/cam/live.html',cams = c)
 
 # route for adding the camera
 @app.route('/addcamera')
@@ -88,102 +132,96 @@ def add_cam_page():
 # route to cam management page
 @app.route('/cameramanage')
 def cam_manage():
-    return render_template('dashboard/cam/index.html')
+    cams = Camera.query.all()
+    if len(cams)==0:
+        cams = 'No records found...'
+        return render_template('dashboard/cam/index.html',cams=cams)
 
-@app.route('/cam-info', methods=['POST', 'GET'])
-def cam_info():
-    camdata = db.child('line Crossing').get().val().values()
-    dict_sorted = natsort.natsorted(camdata, key=itemgetter(*['camera_name']))
-    return jsonify(dict_sorted)
+    return render_template('dashboard/cam/index.html',cams=cams)
 
 @app.route('/remove-cam', methods=['POST'])
 def remove_cam():
-    data = request.get_json()['id']
-    try:
-        db.child('line Crossing').child(data).remove()
-    except:
-        return jsonify({ "success": False })
-    return jsonify({ "success": True })
+    c = Camera.query.get(request.form['camid'])
+    cc = CameraConfig.query.filter_by(camera_id=c.id).first()
+    if cc != None:
+        db.session.delete(cc)
+    else:
+        pass
+    db.session.delete(c)
+    db.session.commit()
+    c = Camera.query.all()
+    return redirect('/cameramanage')
 
-@app.route('/configure-cam/<camid>', methods=['POST'])
-def config_cam(camid):
-    try:
-        camdata = db.child('line Crossing').child(camid).get().val()
-    except:
-        return jsonify({"success": False})
-    try: 
-        info = configure(camdata)
-    except:
-        return jsonify({"success": False})
-    
-    [line1, line2, regionPts, case, slope] = info
-    line1 = str(line1)
-    line2 = str(line2)
-    regionPts = str(regionPts)
-    line1 = [(line1.strip('()').split('), (')[0]), (line1.strip('()').split('), (')[1])]
-    # line2 = camDetails['Line2'].values[i]
-    line2 = [((line2.strip('()').split('), (')[0])), ((line2.strip('()').split('), (')[1]))]
-    regionPts = [((regionPts.strip('[]').split('], [')[0])), ((regionPts.strip('[]').split('], [')[1])),((regionPts.strip('[]').split('], [')[2])), ((regionPts.strip('[]').split('], [')[3])) ]
-    print(info)
-    print(regionPts)
-    try:
-        db.child('line Crossing').child(camid).child('configuration').set({"line1": line1, "line2":line2, "regionPts":regionPts, "case": case, "slope":slope})
-        return jsonify({ "success": True })
-    except:
-        return jsonify({ "success": False })
+@app.route('/configure-cam', methods=['POST'])
+def config_cam():
+    c = Camera.query.get(request.form['camid'])
+    ip = c.ip_address
+    name = c.name
+    name,ip,roi = captureFrame(ip,name)
+    cam_conf = CameraConfig(camera_id=c.id,cam_name=name,ip=ip,roi=roi)
+    db.session.add(cam_conf)
+    db.session.commit()
+    return redirect('/cameramanage')
 
 @app.route('/add-camera', methods=['POST'])
 def add_camera():
     pwd = request.form['password']
     cam_name = request.form['cam_name']
-    activity = request.form['activity']
+    if request.form['activity'] is None:
+        activity = 'both'
+    else:
+        activity = request.form['activity']
     ipaddress = request.form['ipaddress']
     channel = request.form['channel']
     userid = request.form['uid']
-    db.child(activity).child(cam_name).set({ 'password': pwd, 'camera_name': cam_name, 'activity': activity, 'ipaddress': ipaddress, 'channel': channel, 'userid': userid })
-    return render_template('camManage.html')
+    c = Camera(name=cam_name,ip_address=ipaddress,channel=channel,uid=userid,activity_monitor='Both')
+    db.session.add(c)
+    db.session.commit()
+    test_connect([cam_name,channel,ipaddress]) # for notification showing
+    return redirect('/cameramanage')
 
-@app.route('/run-lc-configuration', methods=['POST'])
-def run_lc_config():
-    try:
-        lineCross()
-        return jsonify({ "success": True })
-    except:
-        return jsonify({ "success": False })
 
-    return render_template('index.html', home=True)
+# this is for the notifications
+# @socketio.on('noti',namespace='/notify')
+def test_connect(data):
+    print('--'*100)
+    print('insdie test connect functions')
+    print('--'*25)
+    title = data[0]
+    messages = data[1]
+    image_url = data[2]
+    notification = Notifications(title=title,msg=messages,image_url=image_url)
+    db.session.add(notification)
+    db.session.commit()
+    pusher_client.trigger('my-channel', 'my-event', {'title':title,'message':messages,'img_url':image_url })
 
-@app.route('/run-cc-configuration', methods=['POST'])
-def run_cc_config():
-    try:
-        run_crowdcount()
-        return jsonify({ "success": True })
-    except:
-        return jsonify({ "success": False })
+@app.route('/notifications')
+def notifications():
+    n = Notifications.query.all();
 
-    # return render_template('index.html', home=True)
+    if len(n)==0:
+        n = 'No records found...'
+        return render_template('dashboard/notifications/index.html',notify=n)
+    return render_template('dashboard/notifications/index.html',notify=n) 
 
-@app.route('/camsd4', methods=['POST'])
-def display_four():
-    formdata = request.form
-    data = db.child('line Crossing').get().val().values()
-    dict_sorted = natsort.natsorted(data, key=itemgetter(*['camera_name']))
-    today = str(date.today())
-    return render_template('display4.html', formdata=formdata, today=today, data=dict_sorted)
-
-@app.route('/camsd8', methods=['POST'])
-def display_eight():
-    data = request.form
-    today = str(date.today())
-    return render_template('display8.html', data=data, today=today)
+@app.route('/analytics')
+def analytics():
+    return render_template('dashboard/analytics.html')
 
 @app.route('/index.html')
 def index():
     return render_template('dashboard/admin.html', home=True)
 
 @app.route('/')
-def hello_world():    
+def hello_world(): 
     return render_template('dashboard/admin.html', home=True)
-    
-if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1')
+
+@socketio.on('connect',namespace='/conn')    
+def ws_con():
+    socketio.emit('msg',{'message':'connected'},namespace='/conn')
+
+# @socketio.on('disconnect',namespace='/notify')
+# def ws_disconn():
+#     socketio.emit('msg',{'message':'disconnected'},namespace='/notify')
+# if __name__ == '__main__':
+#     socketio.run(Threading=True,debug=True, host='127.0.0.1')

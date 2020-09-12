@@ -1,0 +1,66 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Cam Section</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <a href="{{ url_for('add_cam_page')}}" class="btn btn-sm btn-outline-secondary">Add Cam</a>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table">
+                <thead>
+                    <th>#</th>
+                    <th>Cam Name</th>
+                    <th>IP Address</th>
+                    <th>Channel</th>
+                    <th>User ID</th>
+                    <th>Activity Monitoring</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <!-- PUT LOOP HERE FOR ALL THE CAMERAS LIST -->
+                    {% if cams=='No records found...' %}
+                        <tr>
+                            <p style="color: blue;">{{cams}}</p>
+                        </tr>
+                    {% else %}
+                    
+                        {% for cam in cams %}
+                        <tr>
+                            <td>{{ cam.id }}</td>
+                            <td>{{ cam.name }}</td>
+                            <td>{{ cam.ip_address}}</td>
+                            <td>{{ cam.channel }}</td>
+                            <td>{{ cam.uid }}</td>
+                            <td>{{ cam.activity_monitor }}</td>
+                            <td>
+                                <form action="{{ url_for('config_cam') }}" method="post">
+                                    <input type="hidden" value="{{ cam.id }}" name="camid">
+                                    <input type="submit" value="CONFIGURE" class="btn-link">
+                                </form>
+                                <form action="{{ url_for('remove_cam') }}" method="post">
+                                    <input type="hidden" value="{{ cam.id }}" name="camid">
+                                    <input type="submit" value="DELETE" class="btn-link">
+                                </form>
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- END THE LOOP HERE -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

@@ -1,0 +1,47 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Notification Section</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <!-- <a href="{{ url_for('add_cam_page')}}" class="btn btn-sm btn-outline-secondary">Add Cam</a> -->
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover table">
+                <thead>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Image Url</th>
+                    <!-- <th>Actions</th> -->
+                </thead>
+                <tbody>
+                    <!-- PUT LOOP HERE FOR ALL THE CAMERAS LIST -->
+                    {% if notify=='No records found...' %}
+                        <tr>
+                            <p style="color: blue;">{{notify}}</p>
+                        </tr>
+                    {% else %}
+                    
+                        {% for mesg in notify %}
+                        <tr>
+                            <td>{{ mesg.id }}</td>
+                            <td>{{ mesg.title }}</td>
+                            <td>{{ mesg.message}}</td>
+                            <td>{{ mesg.image_url }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- END THE LOOP HERE -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

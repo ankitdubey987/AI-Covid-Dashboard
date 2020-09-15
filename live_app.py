@@ -4,6 +4,12 @@ import eventlet
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory,Response
 from flask_socketio import SocketIO,emit,send
+#Login And Authentication
+from flask_admin import Admin
+from flask_admin import helpers as admin_helpers
+from flask_admin.contrib.sqla import ModelView
+from flask_security import current_user, Security, SQLAlchemyUserDatastore, UserMixin
+from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 from operator import itemgetter
 from datetime import date
@@ -256,6 +262,10 @@ def index():
 
 @app.route('/')
 def hello_world(): 
+    return render_template('dashboard/login-form.html', home=True)
+
+@app.route('/admin')
+def first_page(): 
     return render_template('dashboard/admin.html', home=True)
 
 @socketio.on('connect',namespace='/conn')    

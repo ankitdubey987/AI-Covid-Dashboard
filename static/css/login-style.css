@@ -1,52 +1,54 @@
-* Below line is used for online Google font */
+/* Below line is used for online Google font */
 @import url(http://fonts.googleapis.com/css?family=Raleway);
+body {
+	background-color: #2b2d2f;
+	align-items: center;
+}
 h2{
-background-color: #FEFFED;
-padding: 30px 35px;
-margin: -10px -50px;
-text-align:center;
-border-radius: 10px 10px 0 0;
+	color: white;
+	padding: 40px 35px;
+	padding-left: 50px;
+	margin: -10px -50px;
+	border-radius: 10px 10px 0 0;
 }
 hr{
-margin: 10px -50px;
-border: 0;
-border-top: 1px solid #ccc;
-margin-bottom: 40px;
+	margin: 10px -50px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin-bottom: 40px;
 }
 div.container{
-width: 900px;
-height: 610px;
-margin:35px auto;
-font-family: 'Raleway', sans-serif;
+	width: 900px;
+	height: 610px;
+	margin: auto;
+	padding-left: 160px;
+	font-family: 'Raleway', sans-serif;
 }
 div.main{
-width: 300px;
-padding: 10px 50px 25px;
-border: 2px solid gray;
-border-radius: 10px;
-font-family: raleway;
-float:left;
-margin-top:50px;
+	width: 600px;
+	padding: 10px 50px 25px;
+	margin: auto;
+	border: 2px solid gray;
+	border-radius: 10px;
+	font-family: raleway;
+	float:left;
+	margin-top: 50px;
 }
 input[type=text],input[type=password]{
-width: 100%;
-height: 40px;
-padding: 5px;
-margin-bottom: 25px;
-margin-top: 5px;
-border: 2px solid #ccc;
-color: #4f4f4f;
-font-size: 16px;
-border-radius: 5px;
+	width: 100%;
+	height: 40px;
+	padding: 5px;
+	margin-bottom: 25px;
+	margin-top: 5px;
+	border: 2px solid #ccc;
+	color: #4f4f4f;
+	font-size: 16px;
+	border-radius: 5px;
 }
 label{
-color: #464646;
-text-shadow: 0 1px 0 #fff;
-font-size: 14px;
-font-weight: bold;
-}
-center{
-font-size:32px;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
 }
 .note{
 color:red;
@@ -55,25 +57,25 @@ color:red;
 color:green;
 }
 .back{
-text-decoration: none;
-border: 1px solid rgb(0, 143, 255);
-background-color: rgb(0, 214, 255);
-padding: 3px 20px;
-border-radius: 2px;
-color: black;
+	text-decoration: none;
+	border: 1px solid rgb(0, 143, 255);
+	background-color: rgb(0, 214, 255);
+	padding: 3px 20px;
+	border-radius: 2px;
+	color: black;
 }
 input[type=button]{
-font-size: 16px;
-background: linear-gradient(#ffbc00 5%, #ffdd7f 100%);
-border: 1px solid #e5a900;
-color: #4E4D4B;
-font-weight: bold;
-cursor: pointer;
-width: 100%;
-border-radius: 5px;
-padding: 10px 0;
-outline:none;
+	font-size: 16px;
+	background: linear-gradient(#00688B 5%, #009ACD 100%);
+	border: none;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+	width: 100%;
+	border-radius: 5px;
+	padding: 10px 0;
+	outline:none;
 }
 input[type=button]:hover{
-background: linear-gradient(#ffdd7f 5%, #ffbc00 100%);
+background: linear-gradient(#009ACD 5%, #00688B 100%);
 }

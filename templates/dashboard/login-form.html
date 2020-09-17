@@ -13,7 +13,12 @@
 	<body>
 	<div class="container">
 	<div class="main">
-	<h2>Javascript Login Form Validation</h2>
+	<table>
+		<tr>
+			<td><h2>Login</h2></td>
+			<td style="padding-left: 130px;"><img src="../../static/imgs/logo.png" height="40" width="230" class="logo"></td>
+		</tr>
+	</table>	
 	<form id="form_id" method="post" name="myform">
 	<label>User Name :</label>
 	<input type="text" name="username" id="username"/>
@@ -32,7 +37,7 @@
 			var password = document.getElementById("password").value;
 			if ( username == "admin" && password == "pass"){
 			alert ("Login successfully");
-			window.location = "/admin"; // Redirecting to other page.
+			window.location = "/analytics"; // Redirecting to other page.
 			return false;
 			}
 			else{

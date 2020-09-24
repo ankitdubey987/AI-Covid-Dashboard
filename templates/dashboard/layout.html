@@ -7,55 +7,58 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <title>AI COVID DASHBOARD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- pusher api -->
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <!-- pusher api end -->
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+
+    {% block custom_css %}  
     
-    {% block custom_css %}    {% endblock custom_css %}
+    {% endblock custom_css %}
     <!-- Bootstrap core CSS -->
-<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
-<!-- using for notifications -->
+    <!-- using for notifications -->
 
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.1/darkly/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.1/darkly/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='lib/notifyMessage/css/notifyMessage.css',_external=True) }}" />
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<!-- end of notifications -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- end of notifications -->
 
-<!-- for socket-io -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-<!-- end of socket-io -->
+    <!-- for socket-io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <!-- end of socket-io -->
 
-<!-- for notifications -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" />
-<!-- end of notifications -->
+    <!-- for notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" integrity="sha512-8D+M+7Y6jVsEa7RD6Kv/Z7EImSpNpQllgaEIQAtqHcI0H6F4iZknRj0Nx1DCdB+TwBaS+702BGWYC0Ze2hpExQ==" crossorigin="anonymous" />
+    <!-- end of notifications -->
 
-<script>
-  var pusher = new Pusher('70b9ceedb34f11ec845a', {
-    cluster: 'ap2'
-  });
+    <script>
+      var pusher = new Pusher('70b9ceedb34f11ec845a', {
+        cluster: 'ap2'
+      });
 
-  var channel = pusher.subscribe('my-channel');
-  channel.bind('my-event', function(data) {
-    $.toast({heading:data.title,
-      icon:'error',
-    text:'<a href="'+data.img_url+'">'+data.message+'</a>',
-    hideAfter:5000,
-    showHideTransition: 'slide',
-    position: 'top-right'});
-  });
-</script>
+      var channel = pusher.subscribe('my-channel');
+      channel.bind('my-event', function(data) {
+        $.toast({heading:data.title,
+          icon:'error',
+        text:'<a href="'+data.img_url+'">'+data.message+'</a>',
+        hideAfter:5000,
+        showHideTransition: 'slide',
+        position: 'top-right'});
+      });
+    </script>
 
-<script type="text/javascript">
-    var con_socket = io.connect('http://'+document.domain+':'+location.port+'/conn');
-    con_socket.on('msg',function(msg){
-      console.log(msg.message);
-    });
-</script>
+    <script type="text/javascript">
+        var con_socket = io.connect('http://'+document.domain+':'+location.port+'/conn');
+        con_socket.on('msg',function(msg){
+          console.log(msg.message);
+        });
+    </script>
   <!-- Favicons -->
 <!-- <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180"> -->
 <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -82,60 +85,88 @@
     }
   }
 </style>
+<style type="text/css">
+  /*body {
+    background-color: #101010 very dark blue:: #1A1A2E;
+    color: white;
+  }*/  
+  li {
+    color: #fff;
+  }
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #fff;
+  }
+  
+  .sidebar .nav-link .feather {
+    color: #fff111;
+  }
+  
+  .sidebar .nav-link.active {
+    color: #007bff;
+  }
+  .li-dashboard {
+    color: #F0F0F0;
+  }
+  #dashboard-icon {
+    color: #F0F0F0;
+    padding-right: 5px;
+    padding-right: 8px;
+  }
+</style>
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/dashboard/dashboard.css',_external=True) }}" rel="stylesheet">
   </head>
-  <body>
+  <body text="#ffffff" link="#ffffff" vlink="#ffffff" alink="#ffffff">
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{{ url_for('index') }}"><span style="padding-left: 1px;">JK Cement&nbsp;</span><span style="padding-left: 40px;"><!--<img src="{{ url_for('static', filename='imgs/hindalcologo.jpeg') }}" width="55">--></span></a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#" id="testing">Sign out</a>
-    </li>
-  </ul>
-</nav>
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{{ url_for('index') }}"><span style="padding-left: 1px;">JK Cement&nbsp;</span><span style="padding-left: 40px;"><!--<img src="{{ url_for('static', filename='imgs/hindalcologo.jpeg') }}" width="55">--></span></a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#" id="testing">Sign out</a>
+        </li>
+      </ul>
+    </nav>
 
 <div class="container-fluid">
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
+      <div class="sidebar-sticky pt-3" style="background-color: /*#4b5d67*//*greenish light blue:: #1e5f74 #D0D0D0*/ #181818; color: #fff;">
+        <ul class="nav flex-column" style="color: #fff;">
           <li class="nav-item">
             <a class="nav-link active" href="{{ url_for('index') }}">
-              <span><img src="{{ url_for('static', filename='icons/house.svg') }}" width="30" alt=""></span>
+              <span><i id="dashboard-icon" class="fa fa-home"></i></span>
               Dashboard <span class="sr-only">(current)</span>
             </a>
           </li>
           <div id="accordion">  
             <li class="nav-item">
               <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <span><img src="{{ url_for('static', filename='icons/camera-reels.svg') }}" width="30" alt=""></span>
-                LIVE CAMS
-              </a>
+                <span><i id="dashboard-icon" class="fa fa-video-camera"></i></span>
+                <span class="li-dashboard"> LIVE CAMS </span>
             </li>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
               <li class="nav-item">
                 <a class="nav-link " href="{{ url_for('singlecam') }}">
-                  SINGLE CAMERA VIEW      
+                  <span class="li-dashboard"> SINGLE CAMERA VIEW </span>     
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="{{ url_for('fourcam') }}">
-                  4 CAMERA VIEW
+                  <span class="li-dashboard"> 4 CAMERA VIEW </span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="{{ url_for('eightcam') }}">
-                  8 CAMERA VIEW       
+                  <span class="li-dashboard"> 8 CAMERA VIEW </span>      
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="{{ url_for('twentycam') }}">
-                  20 CAMERA VIEW      
+                  <span class="li-dashboard"> 20 CAMERA VIEW </span>      
                 </a>
               </li>
             </div>  
@@ -148,20 +179,20 @@
           </li> -->
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('notifications') }}">
-              <span><img src="{{ url_for('static', filename='icons/chat-square-dots.svg') }}" width="30" alt=""></span>
-              NOTIFICATIONS
+              <span><i id="dashboard-icon" class="fa fa-calendar-check-o"></i></span>
+              <span class="li-dashboard"> NOTIFICATIONS </span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('cam_manage') }}">
-              <span><img src="{{ url_for('static', filename='icons/camera2.svg') }}" width="30" alt=""></span>
-              CAM MANAGEMENT
+              <span><i id="dashboard-icon" class="fa fa-camera"></i></span>
+              <span class="li-dashboard"> CAM MANAGEMENT </span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('analytics') }}">
-              <span><img src="{{ url_for('static', filename='icons/display.svg') }}" width="30" alt=""></span>
-              ANALYTICS
+              <span><i id="dashboard-icon" class="fa fa-bar-chart"></i></span>
+              <span class="li-dashboard"> ANALYTICS </span>
             </a>
           </li>
         </ul>

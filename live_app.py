@@ -15,6 +15,7 @@ from operator import itemgetter
 from datetime import date
 from datetime import datetime
 from markPointsVid import captureFrame
+from flask_admin.contrib.sqla import ModelView
 # eventlet.monkey_patch()
 from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response, send_from_directory,Response
 from flask_socketio import SocketIO,emit,send
@@ -92,6 +93,15 @@ class Notifications(db.Model):
     msg = db.Column(db.Text)
     image_url = db.Column(db.Text)
 
+#admin
+admin = Admin(app)
+
+admin.add_view(ModelView(Camera, db.session))
+admin.add_view(ModelView(CameraConfig, db.session))
+admin.add_view(ModelView(Notifications, db.session))
+
+
+
 # done by sukanya
 @app.route('/singlecamview')
 def singlecam():
@@ -116,7 +126,6 @@ def atoi(text):
 
 def natural_keys(text):
     return [ atoi(c) for c in re.split(r'(\d+)', text) ]
-#>>>>>>> 8494238ba5bfc0ff2e657c02016ed9aa96022761
 
 # for frames to be shown
 def gen(camera):
@@ -252,4 +261,3 @@ def ws_con():
 #     socketio.emit('msg',{'message':'disconnected'},namespace='/notify')
 # if __name__ == '__main__':
 #     socketio.run(Threading=True,debug=True, host='127.0.0.1')
-#>>>>>>> 8494238ba5bfc0ff2e657c02016ed9aa96022761
